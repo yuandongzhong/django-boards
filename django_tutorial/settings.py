@@ -134,3 +134,16 @@ LOGIN_REDIRECT_URL = 'home'
 EMAIL_BACKED = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_URL = 'login'
+
+
+from decouple import config, Csv
+import dj_database_url
+
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, case=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+DATABASE = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
